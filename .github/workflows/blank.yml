@@ -4,7 +4,7 @@ on: [push, workflow_dispatch]
 jobs:
   my-first-job:
     runs-on: ubuntu-latest
-    steps:  # <--- This was the missing line
+    steps:
       - name: System Information
         run: |
           echo "--- OS Information ---"
@@ -17,5 +17,21 @@ jobs:
           df -h | grep '^/dev/'
           echo "--- GPU Info ---"
           lspci | grep -i nvidia || echo "No NVIDIA GPU detected"
+
+      - name: Analyze Disk Usage
+        run: |
+          echo "--- Top 10 Largest Directories ---"
+          # This calculates the size of folders in the root directory
+          sudo du -h -d 1 / 2>/dev/null | sort -hr | head -n 10
+
+      - name: Free Up Disk Space
+        run: |
+          echo "--- Space Before Cleanup ---"
+          df -h /
+          # Removing heavy tools you likely don't need for Node.js
+          sudo rm -rf /usr/local/lib/android # ~10GB
+          sudo rm -rf /usr/share/dotnet      # ~2GB
+          echo "--- Space After Cleanup ---"
+          df -h /
 
         
