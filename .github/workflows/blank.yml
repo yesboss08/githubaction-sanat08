@@ -19,11 +19,11 @@ jobs:
     runs-on: ubuntu-latest
     needs: my-first-job
     steps:
-      - name: Print all system info
-        run: |
-          lsb_release -a
-          uname -r
-          lscpu
-          nproc
-          free -h
-          lsblk
+      - name: check openssl clinet
+        run: dpkg -l | grep openssh-client
+      - name: check openssl clinet
+        run: dpkg -l | grep openssh-server
+      - name: check the current ssh status
+        run: sudo systemctl status ssh
+        
+         
