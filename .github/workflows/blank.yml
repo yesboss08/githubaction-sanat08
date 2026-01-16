@@ -4,31 +4,18 @@ on: [push, workflow_dispatch]
 jobs:
   my-first-job:
     runs-on: ubuntu-latest
-    timeout-minutes: 1
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Create JS File
-        run: echo 'console.log("Hello World!");' > app.js
-
-      - name: Run Node.js File
-        run: node app.js
-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-    
-
-  second-job:
-    needs: my-first-job
-    runs-on: ubuntu-latest
-    timeout-minutes: 1
-    
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-        
-      - name: end the tmate
-        run: ls -a
+    steps:  # <--- This was the missing line
+      - name: System Information
+        run: |
+          echo "--- OS Information ---"
+          lsb_release -a
+          echo "--- CPU Info ---"
+          lscpu | grep -E 'Model name|CPU\(s\)|Thread\(s\) per core|Core\(s\) per socket'
+          echo "--- RAM Info ---"
+          free -h
+          echo "--- Disk Space ---"
+          df -h | grep '^/dev/'
+          echo "--- GPU Info ---"
+          lspci | grep -i nvidia || echo "No NVIDIA GPU detected"
 
         
