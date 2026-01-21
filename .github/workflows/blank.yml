@@ -18,11 +18,6 @@ jobs:
           echo "--- GPU Info ---"
           lspci | grep -i nvidia || echo "No NVIDIA GPU detected"
 
-      - name: Analyze Disk Usage
-        run: |
-          echo "--- Top 10 Largest Directories ---"
-          # This calculates the size of folders in the root directory
-          sudo du -h -d 1 / 2>/dev/null | sort -hr | head -n 10
 
       - run: aws --version
 
