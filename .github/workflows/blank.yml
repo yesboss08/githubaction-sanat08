@@ -24,6 +24,8 @@ jobs:
           # This calculates the size of folders in the root directory
           sudo du -h -d 1 / 2>/dev/null | sort -hr | head -n 10
 
+      - run: aws --version
+
       - name: Free Up Disk Space
         run: |
           echo "--- Space Before Cleanup ---"
@@ -34,4 +36,4 @@ jobs:
           echo "--- Space After Cleanup ---"
           df -h /
 
-        
+      
